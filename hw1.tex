@@ -1,0 +1,139 @@
+\documentclass[12pt]{exam}
+\usepackage{amsthm}
+\usepackage{libertine}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{siunitx}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tikz}
+
+
+\pgfplotsset{width=10cm,compat=1.9}
+\usepgfplotslibrary{external}
+\tikzexternalize
+
+\newcommand{\class}{APCS} % This is the name of the course 
+\newcommand{\examnum}{HW1} % This is the name of the assignment
+\newcommand{\examdate}{9-2-26} % This is the due date
+\newcommand{\timelimit}{}
+
+
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\textbf{\class} & 
+\textbf{Name:} & \textit{Toby Semple}\\ %Your name here instead, obviously 
+\textbf{\examnum} &&\\
+\textbf{\examdate} &&\\
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+% ---
+
+
+
+
+\begin{enumerate} %You can make lists!
+
+\item 32,767 = 31 * 1,057 \begin{enumerate}
+    \item 2. It is both a number greater than one and is able to factor into the given number.
+
+\end{enumerate}
+
+\item \begin{enumerate}
+    \item There are no values of 'n' for which $3^n - 1$ is a prime.
+    \item 
+\begin{table}[h]
+    \centering % Centers the table on the page
+    \caption{An example table using booktabs.}
+    \label{tab:example_table}
+    
+    \begin{tabular}{lccr} % 3 columns: left-aligned, centered, right-aligned
+        \toprule
+        \textbf{x} & \textbf{Is it prime?} & \textbf{$3^x - 1$} & \textbf{Is it Prime?}\\
+        \midrule
+        1            & yes               & \$2        & no (even) \\
+        2            & yes               & \$8        & no (even)\\
+        3            & yes               & \$26       & no (even)\\
+        4            & no                & \$80       & no (even)\\
+        5            & yes               & \$242      & no (even)\\
+        6            & no                & \$728      & no (even)\\
+        7            & yes               & \$2186     & no (even)\\
+        8            & no                & \$6560     & no (even)\\
+        9            & yes               & \$19682    & no (even)\\
+        10           & no                & \$59048    & no (even)\\
+
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+    \item When n is prime, then $3^n - 2^n$ might be prime.
+
+    \begin{table}[h]
+    \centering % Centers the table on the page
+    \caption{An example table using booktabs.}
+    \label{tab:example_table}
+    
+    \begin{tabular}{lccr} % 3 columns: left-aligned, centered, right-aligned
+        \toprule
+        \textbf{x} & \textbf{Is it prime?} & \textbf{$3^x - 2^n$} & \textbf{Is it Prime?}\\
+        \midrule
+        1            & yes               & \$1        & yes                  \\
+        2            & yes               & \$5        & yes                  \\
+        3            & yes               & \$19       & yes                  \\
+        4            & no                & \$65       & no (divisible by 5)  \\
+        5            & yes               & \$211      & yes                  \\
+        6            & no                & \$665      & no (divisible by 5)  \\
+        7            & yes               & \$2059     & no (divisible by 29) \\
+        8            & no                & \$6305     & no (divisible by 5)  \\
+        9            & yes               & \$19171    & no (divisible by 19) \\
+        10           & no                & \$58025    & no (divisible by 5)  \\
+
+        \bottomrule
+    \end{tabular}
+\end{table}
+\end{enumerate}
+
+
+\item \begin{enumerate}
+    \item $(2*3*5*7) + 1 = 211$
+    This is a prime number because there are no factors below $sqrt(211) < 15$ except 1.
+    \item $(2*5*11) + 1 = 111$ // $111 / 3 = 37$
+    37 is a prime number because there are no factors below $sqrt(37) < 7$ except 1.
+\end{enumerate}
+
+\item $(5+1)! + 2 = 720$ 
+The requested sequence is: 722, 723, 724, 725, & 726
+$722 / 2 = 361
+723 / 3 = 241
+724 / 4 = 181
+725 / 5 = 145
+726 / 6 = 121$
+
+\item No, because that would require one of the numbers to be a multiple of three. 
+If the first number 'x' would be such that $x / 3 = y r 1$, then the next number must be a multiple of three, $( 1 + 2 = 3,)$ gets rid of the remainder.
+If the first number is such that the remainder would be two, the next one would have a remainder of 1 $(2 + 2 = 4, 4 / 3 = 1 r 1)$, the third one would then be a multiple of 3.
+
+\item 
+
+
+
+\end{enumerate}
+
+Look! Math! $f(x)=4x^2 - \frac{3}{4}x +1$ %use the dollar signs to go into math mode
+
+
+\end{document}
