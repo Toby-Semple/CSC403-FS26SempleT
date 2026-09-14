@@ -82,8 +82,10 @@ pattern S n = succ n
 -- Addition is defined recursively 
 -- patten match on x 
 add : Nat → Nat → Nat 
-add Z y = y -- x is either zero, or it came after some other natural number
-add (S x) y = S (add x y) -- 
+add Z y = y
+add (S x) y = S (add x y)
+-- add Z y = y x is either zero, or it came after some other natural number
+-- add (S x) y = S (add x y) -- 
 
 -- infix notation for convenience 
 _+_ : Nat → Nat → Nat 
