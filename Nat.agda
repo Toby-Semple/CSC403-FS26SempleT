@@ -126,16 +126,19 @@ add-succ (S x) y = cong S (add-succ x y)
 -- Pattern match on x and then use recursion 
 -- You will need to use sym, trans, and cong from the Equality.agda file
 add-comm : (x y : Nat) → x + y ≡ y + x 
-add-comm x = {!   !}
+add-comm Z y = sym ( add-zero y )
+add-comm (S x) y = trans (cong S (add-comm x y)) (sym (add-succ y x))
 
 -- Addition is Associative 
 -- Pattern match on x and then use recursion 
 -- We will need to use cong
 add-assoc : (x y z : Nat) → (x + y) + z ≡ x + (y + z) 
-add-assoc = {! !}
+add-assoc Z y z = refl
+add-assoc (S x) y z = cong succ (add-assoc x y z)
 
 -- Let's try to write an equality that uses both associativity and commutativity 
 add-right-comm : (x y z : Nat) → (x + y) + z ≡ (x + z) + y 
-add-right-comm = {! !}
+add-right-comm Z y z = sym ( add-comm z y )
+add-right-comm (S x) y z = cong succ (add-right-comm x y z )
 
 
