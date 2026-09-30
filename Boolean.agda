@@ -107,9 +107,9 @@ module Boolean where
     ife : { A : Set} → Bool → A → A → A
     ife true x y = x
     ife false x y = y 
-
+{-
     -- Bonus Definition: Equality for Booleans
-    _==_ : Bool → Bool → Bool
+    -- _==_ : Bool → Bool → Bool
     true == y = y
     false == y = not y
 
@@ -123,7 +123,7 @@ module Boolean where
     xor-equals-XOR true false = refl
     xor-equals-XOR false true = refl
     xor-equals-XOR false false = refl
-
+-}
     -- Type ⊕ with \oplus 
     -- Alias for our exclusive OR function 
     _⊕_ : Bool → Bool → Bool 
@@ -251,17 +251,17 @@ module Boolean where
     -- BOTH versions of DeMorgan's laws.
     -- You will need to determine the appropriate types and implement the functions.  
 
-    -- demorgan1 : 
-
-    demorgan1 : ( p q : Bool ) → not (p ∨ q) ≡ not p ∧ not q
-    demorgan1 true q = refl
-    demorgan1 false q = refl
-
     -- demorgan2 : 
 
-    demorgan2 : ( p q : Bool ) → not ( p ∧ q ) ≡ not p ∨ not q
+    demorgan2 : ( p q : Bool ) → not (p ∨ q) ≡ not p ∧ not q
     demorgan2 true q = refl
     demorgan2 false q = refl
+
+    -- demorgan1 : 
+
+    demorgan1 : ( p q : Bool ) → not ( p ∧ q ) ≡ not p ∨ not q
+    demorgan1 true q = refl
+    demorgan1 false q = refl
 
 
 

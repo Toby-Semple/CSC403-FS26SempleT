@@ -1,0 +1,409 @@
+\documentclass[12pt]{exam}
+\usepackage{amsthm}
+\usepackage{libertine}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{siunitx}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tikz}
+
+
+\pgfplotsset{width=10cm,compat=1.9}
+\usepgfplotslibrary{external}
+\tikzexternalize
+
+\newcommand{\class}{APCS} % This is the name of the course 
+\newcommand{\examnum}{HW2} % This is the name of the assignment
+\newcommand{\examdate}{9-15-26} % This is the due date
+\newcommand{\timelimit}{}
+
+
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\textbf{\class} & 
+\textbf{Name:} & \textit{Toby Semple}\\ %Your name here instead, obviously 
+\textbf{\examnum} &&\\
+\textbf{\examdate} &&\\
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+% ---
+
+
+1.1
+
+\begin{enumerate} %You can make lists!
+
+    \addtocounter{enumi}{1}
+
+    \item  ~\\
+
+        \begin{enumerate} 
+
+            \item ~ \\
+                J : John is telling the truth.\\
+                B : Bill is telling the truth.\\
+                \\
+                $( J \land B ) \lor ( \lnot J \land \lnot B)$
+                \\
+
+            \item ~\\
+                F : I'll have fish.\\
+                C : I'll have chicken.\\
+                M : I'll have mashed potatoes.\\
+                \\
+                $( F \lor C ) \land \lnot ( F \land M ) $
+                \\
+
+            \item ~\\
+                A : 3 is a divisor of 6. \\
+                B : 3 is a divisor of 9. \\
+                C : 3 is a divisor of 15. \\
+                \\
+                $ A \land B \land C $
+
+        \end{enumerate}
+    
+    \addtocounter{enumi}{2}
+
+    \item  ~\\
+
+        \begin{enumerate} 
+
+            \item Well-formed.
+
+            \item Not well-formed, as commas don't mean anything in sentential notation.
+
+            \item Well-formed.
+
+            \item Not well-formed, as there's no symbol between the two groups of parentheses.
+
+        \end{enumerate}
+
+    \addtocounter{enumi}{2}
+
+    \item ~\\
+
+        \begin{enumerate}
+
+            \item Taxes will go up or the deficit will go up.
+            \item $ \lnot ( \lnot T \land \lnot D) = ( T \lor D ) $ \\
+                Taxes and the deficit won't both go up, but either taxes or the deficit will go up. 
+            \item Either taxes will increase and the deficit won't, or the deficit wil increase and taxes won't.
+        
+        \end{enumerate}
+    
+    \item ~\\
+
+        \begin{enumerate}
+
+            \addtocounter{enumi}{1}
+
+            \item ~\\
+                Premises: \\
+                 - The main course will be either beef or fish.\\
+                 - The vegetable will be either peas or corn.\\
+                 - We will not have both fish as the main course and corn as the vegetable. \\
+                ~\\
+                Conclusion: \\
+                 - We will not have both beef as the main course and peas as the vegetable. \\
+                ~\\
+                This conclusion is incorrect, because having both beef as the main course and peas as the vegetable still satisfies all of the premises.
+
+            \item ~\\
+                Premises: \\
+                 - Either John or Bill is telling the truth.\\
+                 - Either Bill or Sam is lying.
+                ~\\
+                Conclusion: \\
+                 - Either John is telling the truth or Sam is lying. \\
+                ~\\
+                This conclusion is correct:\\
+                 - If John is lying, then Bill must be telling the truth. If Bill is telling the truth, then Bill isn't lying, which means Sam is. \\
+                 - If Sam is telling the truth, then Bill must be lying. If Bill is lying, then he isn't telling the truth, which means John is. 
+                
+
+        \end{enumerate}
+
+    
+\end{enumerate}
+
+1.2
+
+\begin{enumerate}
+
+    \addtocounter{enumi}{1}
+
+    \item ~\\
+
+        \begin{enumerate}
+
+            \item ~\\
+            
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{cccccc}
+                        
+                        \textbf{P} & \textbf{Q} & \textbf{$ \lnot P $} & \textbf{$ ( Q \lor \lnot P) $} & \textbf{$ P \land  ( Q \lor \lnot P)  $} & \textbf{$ \lnot (P \land  ( Q \lor \lnot P)) $}\\
+                        
+                        T       & T       & F       & T       &T       &F         \\
+                        T       & F       & F       & F       &F       &T         \\
+                        F       & T       & T       & T       &F       &T         \\
+                        F       & F       & T       & T       &F       &T         \\
+                        
+                        
+                    \end{tabular}
+                \end{table}
+            
+            \item ~\\
+            
+                \begin{table}[h]
+                    \centering 
+
+                    \begin{tabular}{ccccccc}
+                        
+                        P & Q & R & \textbf{$ \lnot P $} & \textbf{$ ( P \lor Q ) $} & \textbf{$ (\lnot P \land R )  $} & \textbf{$  ( P \lor Q ) \land (\lnot P \land R ) $}\\
+                        
+                        T       & T       & T       & F       & T       & T       & T       \\
+                        T       & T       & F       & F       & T       & F       & F       \\ 
+                        T       & F       & T       & F       & T       & T       & T       \\
+                        T       & F       & F       & F       & T       & F       & F       \\
+                        F       & T       & T       & T       & T       & T       & T       \\
+                        F       & T       & F       & T       & T       & T       & T       \\
+                        F       & F       & T       & T       & F       & T       & F       \\
+                        F       & F       & F       & T       & F       & T       & F       \\
+                        
+                        
+                    \end{tabular}
+                \end{table}
+        
+        \end{enumerate}
+
+    \item ~\\
+        
+        \begin{enumerate}
+
+            \item ~\\
+
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{ccc}
+                        
+                        P & Q & \textbf{$ P + Q $} \\
+                        
+                        T       & T       & F       \\
+                        T       & F       & T       \\
+                        F       & T       & T       \\
+                        F       & F       & F       \\
+                        
+                        
+                    \end{tabular}
+                \end{table}
+            
+            \item ~\\
+            
+                $ ( P \lor Q ) \land \lnot ( P \land Q ) $
+
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{ccccc}
+                        
+                        P & Q & \textbf{$ P \lor Q $} & \textbf{$ \lnot ( P \land Q ) $} & $ ( P \lor Q ) \land \lnot ( P \land Q ) $ \\
+                        
+                        T       & T       & T       & F       & F         \\
+                        T       & F       & T       & T       & T         \\
+                        F       & T       & T       & T       & T         \\
+                        F       & F       & F       & T       & F         \\
+                        
+                        
+                    \end{tabular}
+                \end{table}
+        
+        \end{enumerate}
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\
+
+
+    \item ~\\
+    
+        $ \lnot ( \lnot P \land \lnot Q ) $ \\
+
+        \begin{table}[h]
+            \centering 
+            \label{tab:example_table}
+            
+            \begin{tabular}{ccccccc}
+                
+                P & Q & $ \lnot P $ & $ \lnot Q $ & $ \lnot P \land \lnot Q $ & $ \lnot ( \lnot P \land \lnot Q ) $ & $ P \lor Q $ \\
+                
+                T       & T       & F       & F       & F       & T       & T       \\
+                T       & F       & F       & T       & F       & T       & T       \\
+                F       & T       & T       & F       & F       & T       & T       \\
+                F       & F       & T       & T       & T       & F       & F       \\
+                
+                
+            \end{tabular}
+        \end{table}
+    
+    \addtocounter{enumi}{1}
+
+    \item ~\\
+    
+
+        \begin{table}[h]
+            \centering 
+            \label{tab:example_table}
+            
+            \begin{tabular}{ccccc}
+                
+                P & Q & $ P | Q $ & $ P \land Q $ & $ \lnot ( P \land Q ) $ \\
+                
+                T       & T       & F       & T       & F       \\
+                T       & F       & T       & F       & T       \\
+                F       & T       & T       & F       & T       \\
+                F       & F       & T       & T       & F       \\
+                
+                
+            \end{tabular}
+        \end{table}
+
+    \addtocounter{enumi}{1}
+
+    \item ~\\
+    
+        A and C are equivalent.\\
+        B and E are equivalent.\\
+    
+        \begin{enumerate}
+        
+            \item ~\\
+            
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{ccccccc}
+                        
+                        P & Q & $ \lnot P $ & $ \lnot Q $ & $  P \land Q $ & $ ( \lnot P \land \lnot Q ) $ & $ ( P \land Q ) \lor ( \lnot P \land \lnot Q ) $ \\
+                        
+                        T       & T       & F       & F       & T       & F       & T       \\
+                        T       & F       & F       & T       & F       & F       & F       \\
+                        F       & T       & T       & F       & F       & F       & F       \\
+                        F       & F       & T       & T       & F       & T       & F       \\
+                        
+                        
+                    \end{tabular}
+                \end{table}   
+~\\
+~\\
+~\\
+~\\
+~\\
+~\\    
+            \item ~\\
+            
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{ccccc}
+                        
+                        P & Q & $ \lnot P $ & $ \lnot Q $ & $ \lnot P \land Q $  \\
+                        
+                        T       & T       & F       & F       & T       \\
+                        T       & F       & F       & T       & F       \\
+                        F       & T       & T       & F       & F       \\
+                        F       & F       & T       & T       & T       \\
+                        
+                        
+                    \end{tabular}
+                \end{table}   
+                            
+            \item ~\\
+             
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{ccccccc}
+                        
+                        P & Q & $ \lnot P $ & $ \lnot Q $ & $ P \land \lnot Q $ & $ ( \lnot P \land Q ) $ & $ ( P \land \lnot Q ) \land ( \lnot P \land Q )$ \\
+                        
+                        T       & T       & F       & F       & T       & T       & T       \\
+                        T       & F       & F       & T       & T       & F       & F       \\
+                        F       & T       & T       & F       & F       & T       & F       \\
+                        F       & F       & T       & T       & T       & T       & T       \\
+                        
+                        
+                    \end{tabular}
+                \end{table}   
+                           
+            \item ~\\
+            
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{cccccc}
+                        
+                        P & Q & $ \lnot P $ & $ \lnot Q $ & $  P \land  Q $ & $ \lnot (  P \land  Q ) $  \\
+                        
+                        T       & T       & F       & F       & T       & F       \\
+                        T       & F       & F       & T       & T       & F       \\
+                        F       & T       & T       & F       & T       & F       \\
+                        F       & F       & T       & T       & F       & T       \\
+                        
+                        
+                    \end{tabular}
+                \end{table}   
+                            
+            \item ~\\
+            
+                \begin{table}[h]
+                    \centering 
+                    \label{tab:example_table}
+                    
+                    \begin{tabular}{cccccc}
+                        
+                        P & Q & $ \lnot P $ & $ \lnot Q $ & $ P \land  Q $ & $ \lnot P \lor ( P \land  Q ) $ \\
+                        
+                        T       & T       & F       & F       & T       & T       \\
+                        T       & F       & F       & T       & F       & F       \\
+                        F       & T       & T       & F       & F       & T       \\
+                        F       & F       & T       & T       & F       & T       \\
+                        
+                        
+                    \end{tabular}
+                \end{table}   
+                            
+        \end{enumerate}
+
+\end{enumerate}
+
+\end{document}
