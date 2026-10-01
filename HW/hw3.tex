@@ -1,0 +1,239 @@
+\documentclass[12pt]{exam}
+\usepackage{amsthm}
+\usepackage{libertine}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\usepackage{siunitx}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tikz}
+
+
+\pgfplotsset{width=10cm,compat=1.9}
+\usepgfplotslibrary{external}
+\tikzexternalize
+
+\newcommand{\class}{APCS} % This is the name of the course 
+\newcommand{\examnum}{HW1} % This is the name of the assignment
+\newcommand{\examdate}{9-2-26} % This is the due date
+\newcommand{\timelimit}{}
+
+
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{6pt}} l}
+\textbf{\class} & 
+\textbf{Name:} & \textit{Toby Semple}\\ %Your name here instead, obviously 
+\textbf{\examnum} &&\\
+\textbf{\examdate} &&\\
+\end{tabular*}\\
+\rule[2ex]{\textwidth}{2pt}
+% ---
+
+
+\textbf{1:}
+\begin{align*}
+A &= \{1, 3, 12, 35\} \\
+B &= \{3, 7, 12, 20\} \\
+C &= \{x \mid x \text{ is a prime number}\}
+\end{align*}
+
+\begin{enumerate}
+    \item[\textbf{a)}] $A \cap B = \{3, 12\}$
+    \item[\textbf{b)}] $(A \cup B) \setminus C = \{1, 12, 20, 35\}$
+    \item[\textbf{c)}] $A \cup (B \setminus C) = \{1, 3, 12, 20, 35\}$
+\end{enumerate}
+
+'a' and 'b' are both subsets of 'c'. There are no disjoints between these three sets.
+
+\vspace{1em}
+
+\textbf{8) a)}
+\begin{align*}
+(A \setminus B) \cap C &= (A \land \neg B) \land C \\
+(A \cap C) \setminus B &= (A \land C) \land \neg B
+\end{align*}
+\begin{equation*}
+(A \land \neg B) \land C = (A \land C) \land \neg B \qquad \text{commutative}
+\end{equation*}
+
+\textbf{b)}
+\begin{align*}
+(A \cap B) \setminus B &= (A \land B) \land \neg B \\
+&= A \land (B \land \neg B) \qquad \text{commutative}
+\end{align*}
+
+The resulting contradiction shows the set is empty, as nothing can satisfy the entry requirements.
+
+\textbf{c)}
+\begin{align*}
+A \setminus (A \setminus B) &= A \land \neg (A \land \neg B) \\
+A \cap B &= A \land B
+\end{align*}
+
+\begin{align*}
+& A \land \neg (A \land \neg B) & \\
+&= A \land (\neg A \lor B) & \text{De Morgan} \\
+&= (A \land \neg A) \lor (A \land B) & \text{Distributive} \\
+&= \text{False} \lor (A \land B) & \text{Contradiction} \\
+&= A \land B & \text{Identity}
+\end{align*}
+
+\begin{equation*}
+A \land \neg (A \land \neg B) = A \land B
+\end{equation*}
+
+\newpage
+
+\textbf{14}
+\begin{align*}
+B \Delta C \quad &\to \quad A \Delta (B \Delta C) \\
+A \Delta B \quad &\to \quad (A \Delta B) \Delta C
+\end{align*}
+
+\vspace{1.5em}
+
+\textbf{1.5: 2) a)}
+\begin{align*}
+P &= \text{Mary gets a good appartment Price} \\
+A &= \text{Mary finds a nice appartment} \\
+M &= \text{Mary moves out} \\
+&(P \land A) \to M
+\end{align*}
+
+\textbf{b)}
+\begin{align*}
+C &= \text{good credit history} \\
+D &= \text{adequate down payment} \\
+M &= \text{you get a mortgage} \\
+&M \to (C \land D)
+\end{align*}
+
+\textbf{c)}
+\begin{align*}
+S &= \text{Someone stops Jhon} \\
+D &= \text{Jhon drops out} \\
+&\neg S \to D
+\end{align*}
+
+\textbf{d)}
+\begin{align*}
+A &= x \text{ is dvsbl by } 4 \\
+B &= x \text{ is dvsbl by } 6 \\
+P &= x \text{ is prime} \\
+&P \to \neg (A \lor B)
+\end{align*}
+
+\newpage
+
+\textbf{8) a)}
+
+The first phrase `$(P \to Q) \land (Q \to R)$' implies the transitive that can be found in the second, $(P \to R)$. Because the transitive $(P \to R)$ doesn't involve 'Q' at all, the two biconditionals in the second phrase are needed to cover the cases in which the conditionals are false.
+
+\textbf{b)}
+
+For the statement to not be a tautology:\\
+\\
+If 'P' is true, then 'Q' must be false to make the first conditional false. But if Q is false, then that means that $(Q \to R)$ is true by default.\\
+\\
+If 'P' is false, then the first conditional is true by default, making the second irrelevant.\\
+
+\noindent\textbf{(a) $P \rightarrow (Q \rightarrow R)$}
+\begin{table}[h]
+    \centering 
+    \begin{tabular}{ccccc}
+        \textbf{P} & \textbf{Q} & \textbf{R} & \textbf{$Q \rightarrow R$} & \textbf{$P \rightarrow (Q \rightarrow R)$} \\
+        T & T & T & T & T \\
+        T & T & F & F & F \\
+        T & F & T & T & T \\
+        T & F & F & T & T \\
+        F & T & T & T & T \\
+        F & T & F & F & T \\
+        F & F & T & T & T \\
+        F & F & F & T & T \\
+    \end{tabular}
+\end{table}
+
+\noindent\textbf{(b) $Q \rightarrow (P \rightarrow R)$}
+\begin{table}[h]
+    \centering 
+    \begin{tabular}{ccccc}
+        \textbf{P} & \textbf{Q} & \textbf{R} & \textbf{$P \rightarrow R$} & \textbf{$Q \rightarrow (P \rightarrow R)$} \\
+        T & T & T & T & T \\
+        T & T & F & F & F \\
+        T & F & T & T & T \\
+        T & F & F & F & T \\
+        F & T & T & T & T \\
+        F & T & F & T & T \\
+        F & F & T & T & T \\
+        F & F & F & T & T \\
+    \end{tabular}
+\end{table}
+
+\noindent\textbf{(c) $(P \rightarrow Q) \land (P \rightarrow R)$}
+\begin{table}[h]
+    \centering 
+    \begin{tabular}{cccccc}
+        \textbf{P} & \textbf{Q} & \textbf{R} & \textbf{$P \rightarrow Q$} & \textbf{$P \rightarrow R$} & \textbf{$(P \rightarrow Q) \land (P \rightarrow R)$} \\
+        T & T & T & T & T & T \\
+        T & T & F & T & F & F \\
+        T & F & T & F & T & F \\
+        T & F & F & F & F & F \\
+        F & T & T & T & T & T \\
+        F & T & F & T & T & T \\
+        F & F & T & T & T & T \\
+        F & F & F & T & T & T \\
+    \end{tabular}
+\end{table}
+
+\noindent\textbf{(d) $(P \land Q) \rightarrow R$}
+\begin{table}[h]
+    \centering 
+    \begin{tabular}{ccccc}
+        \textbf{P} & \textbf{Q} & \textbf{R} & \textbf{$P \land Q$} & \textbf{$(P \land Q) \rightarrow R$} \\
+        T & T & T & T & T \\
+        T & T & F & T & F \\
+        T & F & T & F & T \\
+        T & F & F & F & T \\
+        F & T & T & F & T \\
+        F & T & F & F & T \\
+        F & F & T & F & T \\
+        F & F & F & F & T \\
+    \end{tabular}
+\end{table}
+
+\noindent\textbf{(e) $P \rightarrow (Q \land R)$}
+\begin{table}[h]
+    \centering 
+    \begin{tabular}{ccccc}
+        \textbf{P} & \textbf{Q} & \textbf{R} & \textbf{$Q \land R$} & \textbf{$P \rightarrow (Q \land R)$} \\
+        T & T & T & T & T \\
+        T & T & F & F & F \\
+        T & F & T & F & F \\
+        T & F & F & F & F \\
+        F & T & T & T & T \\
+        F & T & F & F & T \\
+        F & F & T & F & T \\
+        F & F & F & F & T \\
+    \end{tabular}
+\end{table}
+
+Comparing the outputs of the truth tables yields two distinct sets of logically equivalent formulas:
+\begin{itemize}
+    \item  Statements \textbf{(a)}, \textbf{(b)}, and \textbf{(d)} are logically equivalent.
+    \item  Statements \textbf{(c)} and \textbf{(e)} are logically equivalent.
+\end{itemize}
+
+\end{document}
+▋
