@@ -87,7 +87,7 @@ mul-comm (S x) y = proof
       by definition equals
     y + (x * y)
       -- Use cong with the recursive hypothesis mul-comm x y.
-      by cong (λ z → y + z) (mul-comm x y) equals
+      by cong (y +_) (mul-comm x y) equals
     y + (y * x)
       -- Use commutativity of addition.
       by add-comm y ((y * x)) equals
@@ -104,16 +104,16 @@ mul-add (S x) y z = proof
       by definition equals
     (y + z) + (x * (y + z))
       -- Use cong with the recursive hypothesis mul-add x y z.
-      by {!   !} equals
+      by cong ((y + z) +_) (mul-add x y z) equals
     (y + z) + ((x * y) + (x * z))
       -- Use associativity of addition 
-      by {!   !} equals
+      by sym (add-assoc (y + z) (x * y) (x * z)) equals
     ((y + z) + (x * y)) + (x * z)
       -- Use add-right-comm 
-      by {!   !} equals
+      by cong (_+ (x * z)) (add-right-comm y z (x * y) ) equals
     ((y + (x * y)) + z) + (x * z)
       -- Use associativity of addition.
-      by {!   !} equals
+      by (add-assoc (y + (x * y)) z (x * z)  ) equals
     (y + (x * y)) + (z + (x * z))
       by definition equals
     (S x * y) + (S x * z) ∎
