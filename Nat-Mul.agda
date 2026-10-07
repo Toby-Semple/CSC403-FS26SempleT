@@ -76,24 +76,24 @@ one-mul Z = refl
 one-mul (S n) = cong S (one-mul n)
 
 mul-one : ∀ (n : Nat) → n * (S Z) ≡ n 
-mul-one Z = {! refl  !}
-mul-one (S n) = {!   !}
+mul-one Z = refl
+mul-one (S n) = cong S (mul-one n)
  
 -- Multiplication of the Naturals is Commutative 
 mul-comm : (x y : Nat) → mul x y ≡ mul y x 
-mul-comm Z y = sym {!   !}
+mul-comm Z y = sym (mul-zero y)
 mul-comm (S x) y = proof
     S x * y
       by definition equals
     y + (x * y)
       -- Use cong with the recursive hypothesis mul-comm x y.
-      by {!   !} equals
+      by cong (λ z → y + z) (mul-comm x y) equals
     y + (y * x)
       -- Use commutativity of addition.
-      by {!   !} equals
+      by add-comm y ((y * x)) equals
     (y * x) + y
       -- Use mul-succ backwards.
-      by {!   !} equals
+      by sym (mul-succ y x) equals
     y * S x ∎
 
 -- The Distributive Property of Multiplication on the Left over Addition 
