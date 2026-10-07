@@ -124,23 +124,47 @@ add-mul : (x y z : Nat) → (y + z) * x ≡ (y * x) + (z * x)
 add-mul x y z = proof
     (y + z) * x
       -- Use commutativity of multiplication.
-      by {!   !} equals
+      by (mul-comm (y + z) x) equals
     x * (y + z)
       -- Use mul-add.
-      by {!   !} equals
+      by mul-add x y z equals
     (x * y) + (x * z)
       -- Use cong and mul-comm to swap the first product.
-      by {!   !} equals
+      by cong (_+ (x * z)) (mul-comm x y) equals
     (y * x) + (x * z)
       -- Use cong and mul-comm to swap the second product.
-      by {!   !} equals
+      by cong(( y * x) +_) (mul-comm x z) equals
     (y * x) + (z * x) ∎ 
 
 -- Boss Battle 
 -- Multiplication of the Naturals is Associative 
-mul-assoc : (x y z : Nat) → x * y * z ≡ x * (y * z) 
-mul-assoc x y z = proof
-    {!   !}
-      by {!   !} equals
-    {!   !} ∎
+zero-equals : (x y : Nat) → (x ≡ Z) → (y ≡ Z) → x ≡ y
+zero-equals x y px py = trans px (sym py)
+
+mul-assoc : (x y z : Nat) → (x * y) * z ≡ x * (y * z) 
+mul-assoc x y Z = proof
+    (x * y) * Z
+      by {!  !} equals
+    x * (y * Z) ∎ 
+mul-assoc x y (S z) = {!   !}
+
+
+-- Attempt 3
+-- mul-assoc Z y z = definition
+-- mul-assoc (S x) Z z = {! definition  !}
+-- mul-assoc (S x) (S y) z = {!   !}
+
+-- Attempt 2 (forgot ∎ , retrying)
+-- mul-assoc x y Z = proof
+--     (x * y) * Z
+--       by {! !} equals
+--     x * (y * Z)
+-- mul-assoc x y (S z) = {!   !}
+
+-- Attempt 1
+-- mul-assoc Z y z = definition
+-- mul-assoc (S x) y z = proof
+--     ((S x) * y) * z
+--       by {!  !} equals
+--     (S x) * (y * z) ∎ 
   
