@@ -155,7 +155,17 @@ mul-assoc x y (S z) = proof
     (x * y) * (S z)
       by (mul-comm (x * y) (S z))equals
     (x * y) + (z * (x * y))
-      by {!  !} equals
+      by rev-equals ((x * y) + (z * (x * y))) (x * (y * (S z))) (proof
+            x * (y * (S z))
+              by (cong (x *_) (trans (mul-succ y z) (add-comm (y * z) y))) equals
+            x * (y + (y * z))
+              by mul-add x y (y * z) equals
+            (x * y) + (x * (y * z))
+              by cong (\ z → (x * y) + (x * z)) (mul-comm y z) equals
+            (x * y) + (x * (z * y))
+              by cong (λ z → x * y + z) (trans (sym (mul-assoc x z y)) (trans (cong (λ z → z * y) (mul-comm x z)) (mul-assoc z x y))) equals
+            (x * y) + (z * (x * y))
+            ∎) equals
     x * (y * (S z)) ∎
 
 --by {!   !} equals
