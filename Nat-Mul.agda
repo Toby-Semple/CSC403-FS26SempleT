@@ -12,7 +12,7 @@
 -- If you need a refresher on Agda hot-keys, see your Nat-Add file
 
 open import Equality 
-open import Nat
+open import Nat-Add-Answers
 module Nat-Mul where 
 
 --------------------------------
