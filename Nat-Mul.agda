@@ -138,16 +138,50 @@ add-mul x y z = proof
 
 -- Boss Battle 
 -- Multiplication of the Naturals is Associative 
+    
+--Prep: if two equations both equal zero, then the two equations are equal to each other.
 zero-equals : (x y : Nat) → (x ≡ Z) → (y ≡ Z) → x ≡ y
 zero-equals x y px py = trans px (sym py)
 
-mul-assoc : (x y z : Nat) → (x * y) * z ≡ x * (y * z) 
-mul-assoc x y Z = proof
-    (x * y) * Z
-      by {!  !} equals
-    x * (y * Z) ∎ 
-mul-assoc x y (S z) = {!   !}
+rev-equals : (x y : Nat) → (y ≡ x) → x ≡ y
+rev-equals x y pyx = sym pyx
 
+mul-assoc : (x y z : Nat) → (x * y) * z ≡ x * (y * z) 
+mul-assoc x y Z = proof -- Because x and y are assumed to be in parenthese, you can't do anything that involves x without pulling it out of the parentheses, so I'm splitting on 'z' so it's already out of the parentheses and can be brought around with 'mul-comm'
+    (x * y) * Z
+      by zero-equals ((x * y) * Z) (x * (y * Z)) ((mul-zero (x * y))) (trans (cong (x *_) (mul-zero y)) (mul-zero x)) equals
+    x * (y * Z) ∎ 
+mul-assoc x y (S z) = proof
+    (x * y) * (S z)
+      by (mul-comm (x * y) (S z))equals
+    (x * y) + (z * (x * y))
+      by {!  !} equals
+    x * (y * (S z)) ∎
+
+--by {!   !} equals
+
+-- Attempt 3: Thought that multiplication was distributable over itself. Back to Attempt 2.
+-- mul-assoc Z y z = zero-equals (Z * y * z) (Z * (y * z)) (trans (cong (_* z) (zero-mul (Z * y))) (zero-mul z)) (zero-mul (y * z))
+-- mul-assoc (S x) y z = proof
+--       ((S x) * y) * z 
+--         by {!  (add-mul ((S x)) y z) !} equals
+--       ((S x) * z) * (z * y) 
+--         by {!   !} equals
+--       (S x) * (y * z) ∎
+
+--Attempt 2.1: Got stuck, realized the solution to second case was to distribute, realize that's probably the intended method. Thought that would be easier
+-- mul-assoc x y Z = proof -- Because x and y are assumed to be in parenthese, you can't do anything that involves x without pulling it out of the parentheses, so I'm splitting on 'z' so it's already out of the parentheses and can be brought around with 'mul-comm'
+--     (x * y) * Z
+--       by zero-equals ((x * y) * Z) (x * (y * Z)) ((mul-zero (x * y))) (trans (cong (x *_) (mul-zero y)) (mul-zero x)) equals
+--     x * (y * Z) ∎ 
+-- mul-assoc x y (S z) = proof
+--     (x * y) * (S z)
+--       by (mul-comm (x * y) (S z)) equals
+--     (S z) * (x * y)
+--       by {!   !} equals
+--     (x * y) + (z * (x * y))
+--       by {!   !} equals
+--     x * (y * (S z)) ∎
 
 -- Attempt 3
 -- mul-assoc Z y z = definition
