@@ -105,7 +105,7 @@ zero-add n = refl
 -- The proof uses 'cong' from the Equality file, which takes two arguments: a function
 -- f : A -> B, and a proof that x ≡ y.  It produces a proof of f x ≡ f y.
 add-zero : (n : Nat) → n + zero ≡ n 
-add-zero Z = refl
+add-zero Z = refl 
 add-zero (S n) = cong S (add-zero n)
 
 -- Agda resolves this one automatically by definition (that is, refl)
@@ -115,7 +115,7 @@ succ-add x y = definition
 -- The other direction requires a little work, but not much.
 -- We need to use cong and a recursive call to add-succ after pattern matching on x 
 add-succ : (x y : Nat) → x + S y ≡ S (x + y) 
-add-succ Z y = refl
+add-succ Z y = refl 
 add-succ (S x) y = cong S (add-succ x y)
 
 
