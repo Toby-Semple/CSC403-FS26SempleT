@@ -59,13 +59,16 @@ zero-pow-zero = refl
 -- Level 2 : Zero to a Positive Power
 -- Unfold pow and use a property of multiplication from Lab 3.
 zero-pow-succ : (n : Nat) → Z ^ S n ≡ Z
-zero-pow-succ Z = {! zero-pow-zero  !}
-zero-pow-succ (S n) = {!   !}
+zero-pow-succ Z = pow-succ Z Z
+zero-pow-succ (S n) = proof 
+          Z ^ S (S n) by (pow-succ Z (S n)) equals 
+         Z ^ (S n) * Z by mul-zero (Z ^ (S n)) equals Z ∎
 
 -- Level 3 : A First Power
 -- After unfolding pow, which identity for multiplication do you need?
 pow-one : (a : Nat) → a ^ 1 ≡ a
-pow-one a = {!   !}
+pow-one Z = {!   !}
+pow-one (S a) = {!   !}
 
 -- Level 4 : Powers of One
 -- Pattern match on n and use recursion. Lift the recursive hypothesis
