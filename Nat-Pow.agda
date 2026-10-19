@@ -60,26 +60,28 @@ zero-pow-zero = refl
 -- Unfold pow and use a property of multiplication from Lab 3.
 zero-pow-succ : (n : Nat) → Z ^ S n ≡ Z
 zero-pow-succ Z = pow-succ Z Z
-zero-pow-succ (S n) = proof 
-          Z ^ S (S n) by (pow-succ Z (S n)) equals 
-         Z ^ (S n) * Z by mul-zero (Z ^ (S n)) equals Z ∎
+zero-pow-succ (S n) = mul-zero (Z ^ S n)
+
+-- (S n) = proof 
+--           Z ^ S (S n) by (pow-succ Z (S n)) equals 
+--          Z ^ (S n) * Z by mul-zero (Z ^ (S n)) equals Z ∎
 
 -- Level 3 : A First Power
 -- After unfolding pow, which identity for multiplication do you need?
 pow-one : (a : Nat) → a ^ 1 ≡ a
-pow-one Z = {!   !}
-pow-one (S a) = {!   !}
+pow-one Z = refl
+pow-one (S a) = cong succ (pow-one a)
 
 -- Level 4 : Powers of One
 -- Pattern match on n and use recursion. Lift the recursive hypothesis
 -- through multiplication using cong.
 one-pow : (n : Nat) → 1 ^ n ≡ 1
-one-pow Z = {!   !}
+one-pow Z = refl
 one-pow (S n) = proof
     1 ^ S n
       by definition equals
     (1 ^ n) * 1
-      by {!   !} equals
+      by cong (\t → t * 1) (one-pow n) equals
     1 * 1
       by definition equals
     1 ∎
@@ -87,7 +89,8 @@ one-pow (S n) = proof
 -- Level 5 : Squaring
 -- Use pow-one inside a product. Save this lemma for the final boss!
 pow-two : (a : Nat) → a ^ 2 ≡ a * a
-pow-two a = {!   !}
+pow-two Z = refl
+pow-two (S a) = trans (pow-succ (S a) 1) (cong (\t → t * (S a)) (pow-one ((S a))))
 
 -- Level 6 : Adding Exponents
 -- We induct on n. Since our addition recurses on its FIRST argument,
@@ -96,23 +99,23 @@ pow-add : (a m n : Nat) → a ^ (m + n) ≡ (a ^ m) * (a ^ n)
 pow-add a m Z = proof
     a ^ (m + Z)
       -- Use add-zero inside the exponent.
-      by {!   !} equals
+      by cong (\t → a ^ t) (add-zero m) equals
     a ^ m
       -- Use mul-one backwards.
-      by {!   !} equals
+      by sym (trans (cong (\t → (a ^ m) * t) (pow-zero a)) (mul-one (a ^ m))) equals
     (a ^ m) * (a ^ Z) ∎
 pow-add a m (S n) = proof
     a ^ (m + S n)
       -- Use add-succ inside the exponent.
-      by {!   !} equals
+      by cong (pow a) (add-succ m  n) equals
     a ^ S (m + n)
       by definition equals
     (a ^ (m + n)) * a
       -- Use cong with the recursive hypothesis pow-add a m n.
-      by {!   !} equals
+      by cong (\t → mul t a) (pow-add a m n) equals
     ((a ^ m) * (a ^ n)) * a
       -- Use associativity of multiplication.
-      by {!   !} equals
+      by mul-assoc (a ^ m) (a ^ n) a equals
     (a ^ m) * ((a ^ n) * a)
       by definition equals
     (a ^ m) * (a ^ S n) ∎
@@ -121,28 +124,28 @@ pow-add a m (S n) = proof
 -- Induct on n again. In the successor case, we need to move a past
 -- b ^ n. Associativity changes grouping; commutativity changes order.
 mul-pow : (a b n : Nat) → (a * b) ^ n ≡ (a ^ n) * (b ^ n)
-mul-pow a b Z = {!   !}
+mul-pow a b Z = refl
 mul-pow a b (S n) = proof
     (a * b) ^ S n
       by definition equals
     ((a * b) ^ n) * (a * b)
       -- Use the recursive hypothesis inside the product.
-      by {!   !} equals
+      by cong (\t → t * (a * b)) (mul-pow a b n) equals
     ((a ^ n) * (b ^ n)) * (a * b)
       -- Regroup the outer product.
-      by {!   !} equals
+      by mul-assoc (a ^ n) (b ^ n) (a * b) equals
     (a ^ n) * ((b ^ n) * (a * b))
       -- Regroup inside multiplication by a ^ n.
-      by {!   !} equals
+      by cong (mul (a ^ n)) (sym (mul-assoc (b ^ n) a b)) equals
     (a ^ n) * (((b ^ n) * a) * b)
       -- Swap b ^ n and a using cong and mul-comm.
-      by {!   !} equals
+      by cong (\t → (a ^ n) * (t * b)) (mul-comm (b ^ n) a ) equals
     (a ^ n) * ((a * (b ^ n)) * b)
       -- Regroup the inner product.
-      by {!   !} equals
+      by cong (mul (a ^ n)) (mul-assoc a (b ^ n) b) equals
     (a ^ n) * (a * ((b ^ n) * b))
       -- Regroup the outer product backwards.
-      by {!   !} equals
+      by sym (mul-assoc (a ^ n) a ((b ^ n) * b)) equals
     ((a ^ n) * a) * ((b ^ n) * b)
       by definition equals
     (a ^ S n) * (b ^ S n) ∎
@@ -156,20 +159,20 @@ pow-pow a m Z = proof
       by definition equals
     a ^ Z
       -- Use mul-zero backwards inside the exponent.
-      by {!   !} equals
+      by cong (pow a) (sym (mul-zero m)) equals
     a ^ (m * Z) ∎
 pow-pow a m (S n) = proof
     (a ^ m) ^ S n
       by definition equals
     ((a ^ m) ^ n) * (a ^ m)
       -- Use the recursive hypothesis.
-      by {!   !} equals
+      by cong (\t → t * (a ^ m)) (pow-pow a m n) equals
     (a ^ (m * n)) * (a ^ m)
       -- Use pow-add backwards.
-      by {!   !} equals
+      by sym ((pow-add a (m * n) m)) equals
     a ^ ((m * n) + m)
       -- Use mul-succ backwards inside the exponent.
-      by {!   !} equals
+      by sym (cong (pow a)  (mul-succ m n)) equals
     a ^ (m * S n) ∎
 
 -------------------------------
