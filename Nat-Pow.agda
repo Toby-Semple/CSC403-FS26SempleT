@@ -192,6 +192,14 @@ two-mul n = proof
 -- Boss Battle
 -------------------------------
 
+--Tag-ins
+
+-- zero-equals : (x y : Nat) → (x ≡ Z) → (y ≡ Z) → x ≡ y
+-- zero-equals x y px py = trans px (sym py)
+
+-- rev-equals : (x y : Nat) → (y ≡ x) → x ≡ y
+-- rev-equals x y pyx = sym pyx
+
 -- Level 9 : The Square of a Sum
 -- It is tempting to think that (a + b) ^ 2 = a ^ 2 + b ^ 2,
 -- but the cross terms do not disappear!
@@ -202,7 +210,16 @@ two-mul n = proof
 -- You may add helper lemmas if you find them useful.
 -- Remember: add-mul x y z expands (y + z) * x.
 add-sq : (a b : Nat) → (a + b) ^ 2 ≡ ((a ^ 2) + (b ^ 2)) + ((2 * a) * b)
-add-sq a b = {!   !}
+add-sq a b = proof
+    (a + b) ^ 2
+      by pow-two (a + b) equals 
+    (a + b) * (a + b)
+    by mul-add (a + b) a b equals 
+    ((a + b) * a) + ((a + b) * b)
+    by cong (\t → t + ((a + b) * b)) {! (add-mul a b a)  !} equals 
+    {! ((a * a) + (a * b)) + ((a + b) * b)  !} 
+    by {!   !} equals 
+    {!   !}∎
 
 ----------------------------------------
 -- Acknowledgements
