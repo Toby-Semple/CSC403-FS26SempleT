@@ -200,6 +200,10 @@ two-mul n = proof
 -- rev-equals : (x y : Nat) → (y ≡ x) → x ≡ y
 -- rev-equals x y pyx = sym pyx
 
+--Preparations
+
+par-equals : {
+
 -- Level 9 : The Square of a Sum
 -- It is tempting to think that (a + b) ^ 2 = a ^ 2 + b ^ 2,
 -- but the cross terms do not disappear!
