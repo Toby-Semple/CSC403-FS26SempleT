@@ -202,7 +202,6 @@ two-mul n = proof
 
 --Preparations
 
-par-equals : {
 
 -- Level 9 : The Square of a Sum
 -- It is tempting to think that (a + b) ^ 2 = a ^ 2 + b ^ 2,
@@ -218,12 +217,31 @@ add-sq a b = proof
     (a + b) ^ 2
       by pow-two (a + b) equals 
     (a + b) * (a + b)
-    by mul-add (a + b) a b equals 
+      by mul-add (a + b) a b equals 
     ((a + b) * a) + ((a + b) * b)
-    by cong (\t → t + ((a + b) * b)) {! (add-mul a b a)  !} equals 
-    {! ((a * a) + (a * b)) + ((a + b) * b)  !} 
-    by {!   !} equals 
-    {!   !}∎
+      by cong (λ t → t + ((a + b) * b)) (add-mul a a b) equals 
+    ((a * a) + (b * a)) + ((a + b) * b)
+      by cong (λ t → ((a * a) + t) + ((a + b) * b)) (mul-comm b a) equals 
+    ((a * a) + (a * b)) + ((a + b) * b)
+      by cong (λ t → ((a * a) + ( a * b)) + t) (add-mul b a b) equals
+    ((a * a) + (a * b)) + ((a * b) + (b * b))
+      by cong (λ t → (t + (a * b)) + ((a * b) + (b * b))) (sym (pow-two a)) equals
+    ((a ^ 2) + (a * b)) + ((a * b) + (b * b))
+      by cong (λ t → ( a ^ 2 + (a * b)) + ((a * b) + t)) (sym (pow-two b)) equals
+    ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2))
+      by rev-equals {! ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2))  !} (((a ^ 2) + (b ^ 2)) + ((2 * a) * b)) (proof 
+        ((a ^ 2) + (b ^ 2)) + ((2 * a) * b)
+          by cong (λ t → (a ^ 2) + (b ^ 2) + t) (mul-assoc 2 a b)equals
+        ((a ^ 2) + (b ^ 2)) + (2 * (a * b))
+          by cong (λ t → (a ^ 2) + (b ^ 2) + t) (two-mul (a * b)) equals
+        ((a ^ 2) + (b ^ 2)) + ((a * b) + (a * b))
+          by {! cong (λ t → (a ^ 2) + t ) (add-comm (b ^ 2) ((a * b) + (a * b)))   !} equals
+        ((a ^ 2) + ((a * b) + (a * b) + (b ^ 2)))
+          by {!   !} equals
+        {!   !}
+          by {!   !} equals
+        ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2)) ∎ ) equals
+    ((a ^ 2) + (b ^ 2)) + ((2 * a) * b)∎
 
 ----------------------------------------
 -- Acknowledgements
