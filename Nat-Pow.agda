@@ -202,9 +202,14 @@ two-mul n = proof
 
 --Preparations
 
--- add-para : (x y z : Nat) → x + y + z ≡ x + (y + z)
--- add-para Z y z = refl
--- add-para (S x) y z = {! (S (add-assoc(x y z)))  !}
+assoc4 : (a b c d : Nat) → ((a + b) + c) + d ≡ a + (b + (c + d))
+assoc4 a b c d = proof
+    ((a + b) + c) + d
+      by add-assoc (a + b) c d equals
+    (a + b) + (c + d)
+      by add-assoc a b (c + d) equals
+    a + (b + (c + d))
+      ∎
 
 
 -- Level 9 : The Square of a Sum
@@ -239,11 +244,17 @@ add-sq a b = proof
         ((a ^ 2) + (b ^ 2)) + (2 * (a * b))
           by cong (λ t → (a ^ 2) + (b ^ 2) + t) (two-mul (a * b)) equals
         ((a ^ 2) + (b ^ 2)) + ((a * b) + (a * b))
-          by {! cong (λ t → (a ^ 2) + t ) (add-comm (b ^ 2) ((a * b) + (a * b)))   !} equals
+         by refl equals
+        (a ^ 2) + (b ^ 2) + ((a * b) + (a * b))
+          by add-assoc (a ^ 2) (b ^ 2) ((a * b) + (a * b)) equals
+        a ^ 2 + (b ^ 2 + (a * b + (a * b)))
+          by cong (λ t → (a ^ 2) + t ) (add-comm (b ^ 2) ((a * b) + (a * b))) equals
         ((a ^ 2) + ((a * b) + (a * b) + (b ^ 2)))
-          by {!   !} equals
-        {!   !}
-          by {!   !} equals
+          by sym (add-assoc (a ^ 2) ((a * b) + (a * b)) (b ^ 2)) equals
+        (a ^ 2) + ((a * b) + (a * b)) + (b ^ 2)
+          by {! cong (λ t →  t + (b ^ 2)) (sym ( add-assoc (a ^ 2) (a * b) (a * b))) !} equals
+        (a ^ 2) + (a * b) + (a * b) + (b ^ 2)
+          by {! cong (λ t → (a ^ 2) + t) (add-assoc (a * b) (a * b) (b ^ 2))  !} equals
         ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2)) ∎ ) equals
     ((a ^ 2) + (b ^ 2)) + ((2 * a) * b)∎
 
