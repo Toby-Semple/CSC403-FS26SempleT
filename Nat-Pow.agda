@@ -16,7 +16,7 @@
 
 open import Equality
 open import Nat-Add-Answers
-open import Nat-Mul
+open import Nat-Mul-Answers
 module Nat-Pow where
 
 --------------------------------
