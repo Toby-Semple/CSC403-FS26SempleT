@@ -252,9 +252,11 @@ add-sq a b = proof
         ((a ^ 2) + ((a * b) + (a * b) + (b ^ 2)))
           by sym (add-assoc (a ^ 2) ((a * b) + (a * b)) (b ^ 2)) equals
         (a ^ 2) + ((a * b) + (a * b)) + (b ^ 2)
-          by {! cong (λ t →  t + (b ^ 2)) (sym ( add-assoc (a ^ 2) (a * b) (a * b))) !} equals
+          by cong (λ t →  t + (b ^ 2)) (sym ( add-assoc (a ^ 2) (a * b) (a * b))) equals
         (a ^ 2) + (a * b) + (a * b) + (b ^ 2)
-          by {! cong (λ t → (a ^ 2) + t) (add-assoc (a * b) (a * b) (b ^ 2))  !} equals
+          by assoc4 (a ^ 2) (a * b) (a * b) (b ^ 2) equals
+        (a ^ 2) + ((a * b) + ((a * b) + (b ^ 2)))
+          by sym (add-assoc (a ^ 2) (a * b) (a * b + b ^ 2)) equals
         ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2)) ∎ ) equals
     ((a ^ 2) + (b ^ 2)) + ((2 * a) * b)∎
 
