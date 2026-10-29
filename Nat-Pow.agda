@@ -202,6 +202,10 @@ two-mul n = proof
 
 --Preparations
 
+-- add-para : (x y z : Nat) → x + y + z ≡ x + (y + z)
+-- add-para Z y z = refl
+-- add-para (S x) y z = {! (S (add-assoc(x y z)))  !}
+
 
 -- Level 9 : The Square of a Sum
 -- It is tempting to think that (a + b) ^ 2 = a ^ 2 + b ^ 2,
