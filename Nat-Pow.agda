@@ -237,28 +237,25 @@ add-sq a b = proof
       by cong (λ t → (t + (a * b)) + ((a * b) + (b * b))) (sym (pow-two a)) equals
     ((a ^ 2) + (a * b)) + ((a * b) + (b * b))
       by cong (λ t → ( a ^ 2 + (a * b)) + ((a * b) + t)) (sym (pow-two b)) equals
-    ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2))
-      by rev-equals {! ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2))  !} (((a ^ 2) + (b ^ 2)) + ((2 * a) * b)) (proof 
-        ((a ^ 2) + (b ^ 2)) + ((2 * a) * b)
-          by cong (λ t → (a ^ 2) + (b ^ 2) + t) (mul-assoc 2 a b)equals
-        ((a ^ 2) + (b ^ 2)) + (2 * (a * b))
-          by cong (λ t → (a ^ 2) + (b ^ 2) + t) (two-mul (a * b)) equals
-        ((a ^ 2) + (b ^ 2)) + ((a * b) + (a * b))
-         by refl equals
-        (a ^ 2) + (b ^ 2) + ((a * b) + (a * b))
-          by add-assoc (a ^ 2) (b ^ 2) ((a * b) + (a * b)) equals
-        a ^ 2 + (b ^ 2 + (a * b + (a * b)))
-          by cong (λ t → (a ^ 2) + t ) (add-comm (b ^ 2) ((a * b) + (a * b))) equals
-        ((a ^ 2) + ((a * b) + (a * b) + (b ^ 2)))
-          by sym (add-assoc (a ^ 2) ((a * b) + (a * b)) (b ^ 2)) equals
-        (a ^ 2) + ((a * b) + (a * b)) + (b ^ 2)
-          by cong (λ t →  t + (b ^ 2)) (sym ( add-assoc (a ^ 2) (a * b) (a * b))) equals
-        (a ^ 2) + (a * b) + (a * b) + (b ^ 2)
-          by assoc4 (a ^ 2) (a * b) (a * b) (b ^ 2) equals
-        (a ^ 2) + ((a * b) + ((a * b) + (b ^ 2)))
-          by sym (add-assoc (a ^ 2) (a * b) (a * b + b ^ 2)) equals
-        ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2)) ∎ ) equals
-    ((a ^ 2) + (b ^ 2)) + ((2 * a) * b)∎
+        ((a ^ 2) + (a * b)) + ((a * b) + (b ^ 2))
+      by add-assoc (a ^ 2) (a * b) (a * b + b ^ 2) equals
+    (a ^ 2) + ((a * b) + ((a * b) + (b ^ 2)))
+      by sym (assoc4 (a ^ 2) (a * b) (a * b) (b ^ 2)) equals
+    (a ^ 2) + (a * b) + (a * b) + (b ^ 2)
+      by cong (λ t → t + (b ^ 2)) (add-assoc (a ^ 2) (a * b) (a * b)) equals
+    (a ^ 2) + ((a * b) + (a * b)) + (b ^ 2)
+      by add-assoc (a ^ 2) ((a * b) + (a * b)) (b ^ 2) equals
+    ((a ^ 2) + ((a * b) + (a * b) + (b ^ 2)))
+      by cong (λ t → (a ^ 2) + t) (add-comm ((a * b) + (a * b)) (b ^ 2)) equals
+    a ^ 2 + (b ^ 2 + (a * b + (a * b)))
+      by sym (add-assoc (a ^ 2) (b ^ 2) ((a * b) + (a * b))) equals
+    (a ^ 2) + (b ^ 2) + ((a * b) + (a * b))
+      by refl equals
+    ((a ^ 2) + (b ^ 2)) + ((a * b) + (a * b))
+      by cong (λ t → (a ^ 2) + (b ^ 2) + t) (sym (two-mul (a * b))) equals
+    ((a ^ 2) + (b ^ 2)) + (2 * (a * b))
+      by cong (λ t → (a ^ 2) + (b ^ 2) + t) (sym (mul-assoc 2 a b)) equals
+    ((a ^ 2) + (b ^ 2)) + ((2 * a) * b) ∎
 
 ----------------------------------------
 -- Acknowledgements
