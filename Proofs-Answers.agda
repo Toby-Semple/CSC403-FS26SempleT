@@ -16,7 +16,7 @@
 -- Unicode input: \bot gives ⊥, \neg gives ¬, \times gives ×,
 -- \uplus gives ⊎, \== gives ≡, \ne gives ≠, and \qed gives ∎.
 
-module Proofs where
+module Proofs-Answers where
 
 open import Equality
 
