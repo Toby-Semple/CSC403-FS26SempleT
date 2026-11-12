@@ -208,27 +208,29 @@ nat-equality (succ m) (succ n) with nat-equality m n
 -- not true becasue if f = const 0, then cong-rev f 1 = f 2 is false.
 
 add-right-cancel : (a b n : Nat) → a + n ≡ b + n → a ≡ b
-add-right-cancel a b zero h = λ x → trans (sym (add-zero a)) (trans x (add-zero b))
-add-right-cancel a b (succ n) = λ x → (trans {! add-succ a n  !} (trans ((cong (λ x₁ → succ x₁) {!   !})) {!   !}) )
+add-right-cancel a b zero  = λ x → trans (sym (add-zero a)) (trans x (add-zero b))
+add-right-cancel a b (succ n) = λ x → add-right-cancel a b n (succ-inj (trans (sym (add-succ a n)) (trans x (add-succ b n))))
+-- λ x → (trans {! add-succ a n  !} (trans ((cong (λ x₁ → succ x₁) {!   !})) {!   !}) )
+
 
 -- Exercise 17 : Cancel addition on the left
 -- Use add-comm on both sides of the hypothesis and add-right-cancel.
 -- Alternatively, split on n and recursively cancel the leading successors.
 add-left-cancel : (a b n : Nat) → n + a ≡ n + b → a ≡ b
-add-left-cancel a b n = {! !}
+add-left-cancel a b n = λ x → add-right-cancel a b n  ( trans (sym (add-comm n a)) (trans x (sym (add-comm b n))) )
 
 -- Exercise 18 : A sum equal to its right summand
 -- If x + y ≡ y, then x must be zero. View the right-hand y as 0 + y,
 -- and use add-right-cancel. Here 0 + y reduces to y by definition.
 add-left-eq-self : (x y : Nat) → x + y ≡ y → x ≡ zero
-add-left-eq-self x y = {! !}
+add-left-eq-self x y = add-right-cancel x 0 y
 
 -- Exercise 19 : A sum equal to its left summand
 -- If x + y ≡ x, then y must be zero. Turn the right-hand x into x + 0
 -- using add-zero backwards and use add-left-cancel. Another approach
 -- uses add-comm and add-left-eq-self.
 add-right-eq-self : (x y : Nat) → x + y ≡ x → y ≡ zero
-add-right-eq-self x y = {! !}
+add-right-eq-self x y = λ g → add-left-cancel y 0 x (trans g (sym (add-zero x)))
 
 -- Exercise 20 : A zero sum has a zero left summand
 -- Split on b. When b is zero, use add-zero a and the hypothesis.
@@ -236,15 +238,15 @@ add-right-eq-self x y = {! !}
 -- Use zero-ne-succ (after reversing the equality), then ex-falso.
 -- A case split alone suffices here: neither case requires recursion.
 add-right-eq-zero : (a b : Nat) → a + b ≡ zero → a ≡ zero
-add-right-eq-zero a zero h = {! !}
-add-right-eq-zero a (succ b) h = {! !}
+add-right-eq-zero a zero = λ h → add-right-cancel a zero zero (trans h (add-zero zero))
+add-right-eq-zero a (succ b) = λ x → ex-falso( zero-ne-succ(a + b) (sym (trans (sym (add-succ a b)) x)))
 
 -- Exercise 21 : A zero sum has a zero right summand
 -- Use add-comm to exchange a and b, then apply add-right-eq-zero.
 -- Together these last two results give both parts of
 -- (a ≡ zero) × (b ≡ zero) whenever a + b ≡ zero.
 add-left-eq-zero : (a b : Nat) → a + b ≡ zero → b ≡ zero
-add-left-eq-zero a b = {! !}
+add-left-eq-zero a b = λ x →  add-right-eq-zero b a (trans (sym (add-comm a b)) x)
 
 -- Reflection: Where did you need recursion, and where was a case split
 -- enough? How did the implication proofs become functions on equalities?
@@ -261,7 +263,7 @@ add-left-eq-zero a b = {! !}
 -- For this exercise, practice that argument instead of using nat-equality
 -- or immediately pattern matching on the original impossible equality.
 two-add-two-ne-five : (2 + 2) ≠ 5
-two-add-two-ne-five = {! !}
+two-add-two-ne-five = λ x → zero-ne-succ 0 (succ-inj (succ-inj (succ-inj (succ-inj x))))
 
 -- Reflection: Which steps are function application (modus ponens)? Which
 -- introduce an assumption? Which equalities hold by computation?
