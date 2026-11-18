@@ -139,9 +139,9 @@ monus-add (succ m) (succ n) p = monus-add m n p
 -- then associativity forwards. Complete the equality chain.
 add-left-comm : (a b c : Nat) → a + (b + c) ≡ b + (a + c)
 add-left-comm a b c = proof
-    a + (b + c) by {! !} equals
-    (a + b) + c by {! !} equals
-    (b + a) + c by {! !} equals
+    a + (b + c) by sym (add-assoc a b c) equals
+    (a + b) + c by cong (\ x → x + c) (add-comm a b) equals
+    (b + a) + c by add-assoc b a c equals
     b + (a + c) ∎
 
 -- Exercise 13 : Rearrange four summands
@@ -149,11 +149,11 @@ add-left-comm a b c = proof
 -- then add-comm to swap b and d. Finally associate back to the left.
 rearrange-four : (a b c d : Nat) → (a + b) + (c + d) ≡ ((a + c) + d) + b
 rearrange-four a b c d = proof
-    (a + b) + (c + d) by {! !} equals
-    a + (b + (c + d)) by {! !} equals
-    a + (c + (b + d)) by {! !} equals
-    a + (c + (d + b)) by {! !} equals
-    (a + c) + (d + b) by {! !} equals
+    (a + b) + (c + d) by add-assoc a b (c + d) equals
+    a + (b + (c + d)) by cong (\ x → a +  x) ( add-left-comm b c d ) equals
+    a + (c + (b + d)) by cong (\ x → a + (c + x)) (add-comm b d) equals
+    a + (c + (d + b)) by sym (add-assoc a c (d + b)) equals
+    (a + c) + (d + b) by sym(add-assoc (a + c) d b) equals
     ((a + c) + d) + b ∎
 
 ----------------------------------------
@@ -176,14 +176,14 @@ IsZero (succ n) = ⊥
 -- which computes to ⊥. Practice this argument rather than an absurd
 -- pattern or the previously proved zero-ne-succ theorem.
 succ-ne-zero : (n : Nat) → succ n ≠ zero
-succ-ne-zero n h = {! !}
+succ-ne-zero n h = subst IsZero (sym h) tt
 
 -- Exercise 15 : Successors of unequal numbers are unequal
 -- Introduce the supposed successor equality, apply succ-inj-pred, and
 -- feed the resulting predecessor equality to not-equal.
 -- This uses the constructive direction of contraposition.
 succ-ne-succ : {m n : Nat} → m ≠ n → succ m ≠ succ n
-succ-ne-succ not-equal h = {! !}
+succ-ne-succ not-equal h = not-equal( succ-inj-pred( h ))
 
 ----------------------------------------
 -- A verified equality algorithm
@@ -200,12 +200,12 @@ succ-ne-succ not-equal h = {! !}
 -- last case: lift equality with cong succ, or use succ-ne-succ to lift
 -- the refutation. Agda checks that the recursive arguments get smaller.
 nat-equality : (m n : Nat) → Dec (m ≡ n)
-nat-equality zero zero = {! !}
-nat-equality zero (succ n) = {! !}
-nat-equality (succ m) zero = {! !}
+nat-equality zero zero = yes (refl)
+nat-equality zero (succ n) = no (zero-ne-succ(n))
+nat-equality (succ m) zero = no( succ-ne-zero( m ) )
 nat-equality (succ m) (succ n) with nat-equality m n
-... | yes h = {! !}
-... | no not-equal = {! !}
+... | yes h = yes (cong succ h)
+... | no not-equal = no (succ-ne-succ not-equal)
 
 -- Normalize nat-equality 4 4 and nat-equality 4 5. Notice the proof or
 -- refutation stored inside each result, rather than just true or false.
@@ -214,7 +214,8 @@ nat-equality (succ m) (succ n) with nat-equality m n
 -- Split on decision. If A has a proof, refute any proposed proof of ¬ A.
 -- If A has a refutation, that refutation is already a proof of ¬ A.
 dec-not : {A : Set} → Dec A → Dec (¬ A)
-dec-not decision = {! !}
+dec-not (yes x) = no (λ z → z x)
+dec-not (no x) = yes x
 
 -- To use a decision as a proof, we must know it returned yes.
 -- IsYes exposes that requirement as a type: ⊤ for yes, ⊥ for no.
@@ -227,7 +228,7 @@ IsYes (no refutation) = ⊥
 -- In the no branch, the second argument has type ⊥; eliminate it with
 -- an absurd pattern. A Dec A alone cannot always supply a proof of A.
 from-yes : {A : Set} → (decision : Dec A) → IsYes decision → A
-from-yes decision certificate = {! !}
+from-yes (yes x) certificate = x
 
 -- Worked example: the algorithm reduces to yes, so IsYes reduces to ⊤
 -- and tt certifies the branch. from-yes extracts the equality proof.
@@ -239,13 +240,13 @@ three-monus-five = from-yes (nat-equality (3 ∸ 5) zero) tt
 -- refl also proves this closed equality by computation, but practice
 -- obtaining evidence from the decision procedure here.
 twenty-add-twenty : 20 + 20 ≡ 40
-twenty-add-twenty = {! !}
+twenty-add-twenty = from-yes (nat-equality ( 20 + 20 ) 40) tt
 
 -- Exercise 20 : Certify a computed inequality
 -- Use nat-equality, then dec-not, then from-yes with tt.
 -- This replaces the repeated successor cancellation used earlier.
 two-add-two-ne-five-decided : (2 + 2) ≠ 5
-two-add-two-ne-five-decided = {! !}
+two-add-two-ne-five-decided = from-yes (dec-not (nat-equality (2 + 2) 5)) tt
 
 ----------------------------------------
 -- BOSS BATTLE : Certified monus calculations
@@ -259,7 +260,7 @@ two-add-two-ne-five-decided = {! !}
 -- When a decision returns no, its required certificate type is ⊥
 -- instead of ⊤, so Agda rejects tt.
 monus-boss : (((20 + 20) ∸ 21) ≡ 19) × (((20 + 20) ∸ 21) ≠ 20)
-monus-boss = pair {! !} {! !}
+monus-boss = pair (from-yes ((nat-equality((20 + 20) ∸ 21) 19)) tt) (from-yes(dec-not (nat-equality((20 + 20) ∸ 21) 20)) tt)
 
 -- Reflection: Why is m ∸ n + n ≡ m false for arbitrary m and n, even
 -- though (m + n) ∸ n ≡ m is true? Give a counterexample.
