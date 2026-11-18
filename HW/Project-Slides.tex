@@ -1,0 +1,126 @@
+\documentclass[10pt]{beamer}
+\usetheme{metropolis} % A clean, modern theme
+\usecolortheme{default}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+%-------------------------------------------------------------------
+\begin{frame}{Problem Statement}
+Let $n$ and $k$ be fixed positive integers of the same parity, $k \ge n$.
+\begin{itemize}
+    \item We have \textbf{$2n$ lamps} numbered $1$ through $2n$ (all initially \textbf{off}).
+    \item We consider sequences of \textbf{$k$ steps}.
+    \item At each step, one lamp is switched (on $\leftrightarrow$ off).
+\end{itemize}
+
+\vspace{0.3cm}
+We define two values:
+\begin{itemize}
+    \item \textbf{$N$}: The number of $k$-step sequences ending with lamps $1, \dots, n$ \textbf{on}, and lamps $n+1, \dots, 2n$ \textbf{off}.
+    \item \textbf{$M$}: The number of sequences leading to the exact same state, but \textbf{never touching} lamps $n+1, \dots, 2n$ at all.
+\end{itemize}
+
+\vspace{0.3cm}
+\alert{\textbf{Goal:}} Find the ratio $\frac{N}{M}$.
+\end{frame}
+
+%-------------------------------------------------------------------
+\begin{frame}{Step 1: Establishing Non-Emptiness ($M > 0$)}
+Before comparing or dividing, we must prove that a restricted process actually exists ($M > 0$).
+
+\vspace{0.4cm}
+\textbf{Constructive Proof:}
+\begin{enumerate}
+    \item Switch each of the lamps $1, \dots, n$ exactly \textbf{once}. (Takes $n$ steps).
+    \item Choose one of these lamps (e.g., lamp 1) and switch it the remaining $k - n$ times.
+    \item By hypothesis, $k$ and $n$ have the same parity, so $k - n$ is an \textbf{even number}.
+\end{enumerate}
+
+\vspace{0.3cm}
+Because an even number of extra switches preserves the final ``on'' state, this configuration is guaranteed to be a valid restricted process. Thus, $M > 0$.
+\end{frame}
+
+%-------------------------------------------------------------------
+\begin{frame}{Step 2: Modifying a Restricted Process}
+Consider a restricted process $p$, where each lamp $\ell$ ($1 \le \ell \le n$) is switched $k_\ell$ times. 
+\begin{itemize}
+    \item Each $k_\ell$ must be odd.
+    \item The total steps sum up perfectly: $k_1 + k_2 + \dots + k_n = k$.
+\end{itemize}
+
+\pause
+\vspace{0.2cm}
+\textbf{The Modification Trick:}
+\begin{itemize}
+    \item For any lamp $\ell$, choose an \textbf{even number} of its $k_\ell$ switches and change them to target its ``twin'' lamp $n+\ell$.
+    \item A set of size $k_\ell$ has exactly \textbf{$2^{k_\ell-1}$ subsets of even size}.
+\end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------
+\begin{frame}{Step 3: Branching into All Paths}
+Because the choice made for lamp $\ell$ does not affect any other lamp, these selections are completely independent.
+
+\vspace{0.3cm}
+The total number of ways to modify the restricted process $p$ is:
+\[
+2^{k_1-1} \cdot 2^{k_2-1} \cdots 2^{k_n-1} = 2^{(k_1 + \dots + k_n) - n} = \mathbf{2^{k-n}}
+\]
+
+\pause
+\begin{block}{Why are these new processes admissible?}
+\begin{itemize}
+    \item Each high lamp $n+\ell$ is switched an \textbf{even} number of times (ending off).
+    \item Each low lamp $\ell$ lost an \textbf{even} number of switches, leaving its original count odd (ending on).
+\end{itemize}
+Thus, every restricted process yields $2^{k-n}$ unique admissible processes.
+\end{block}
+\end{frame}
+
+%-------------------------------------------------------------------
+\begin{frame}{Step 4: Reversing the Mapping (Surjectivity)}
+Now we prove that \textit{every} general admissible process $q$ is captured by this method.
+
+\vspace{0.3cm}
+\textbf{The Reduction Map:}
+\begin{itemize}
+    \item Take any admissible process $q$.
+    \item Replace every instance of a high lamp $\ell > n$ with its low twin $\ell - n$.
+    \item The resulting sequence $p$ now completely ignores lamps $n+1, \dots, 2n$ $\implies$ It is restricted.
+\end{itemize}
+
+\pause
+\vspace{0.2cm}
+\textbf{Parity Conservation:}
+\begin{itemize}
+    \item Since every high lamp appeared an even number of times in $q$, the replacements add an even number of switches to the low lamps.
+    \item This preserves the target final state, meaning $p$ is a valid restricted process ($p \in M$).
+\end{itemize}
+\end{frame}
+
+%-------------------------------------------------------------------
+\begin{frame}{Conclusion}
+\begin{itemize}
+    \item Reversing the reduction map simply means choosing which even subsets of switches to shift back up to the high lamps.
+    \item This establishes a rigid \textbf{$1$-to-$2^{k-n}$ correspondence} between the set of restricted processes and the set of general processes.
+\end{itemize}
+
+\pause
+\vspace{0.4cm}
+Every restricted process anchors a bundle of exactly $2^{k-n}$ disjoint general sequences that perfectly exhaust the total space $N$.
+
+\[
+N = 2^{k-n} \cdot M
+\]
+
+\vspace{0.2cm}
+\begin{block}{Final Answer}
+\[
+\mathbf{\frac{N}{M} = 2^{k-n}}
+\]
+\end{block}
+\end{frame}
+
+\end{document}

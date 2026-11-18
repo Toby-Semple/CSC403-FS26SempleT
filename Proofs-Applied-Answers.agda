@@ -9,7 +9,7 @@
 -- or disable termination or positivity checks.
 -- The completed introductory library supplies the logical proof tools.
 
-module Proofs-Applied where
+module Proofs-Applied-Answers where
 
 open import Equality
 open import Proofs-Answers
